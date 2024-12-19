@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PedidosApi.Aplicacion.Exceptions;
 using PedidosApi.Aplicacion.Interfaces;
 using PedidosApi.Dominio.Dtos;
 
@@ -24,12 +25,19 @@ namespace PedidosApi.Controllers.V1
                 var message = "cliente guardado  exitosamente.";
                 return Ok(new { mensaje = message });
             }
+            catch (DuplicateEmailException ex)
+            {
+
+                return BadRequest(new { mensaje = "El correo electrónico ya está en uso" });
+            }
             catch (Exception ex)
             {
                 Console.Error.WriteLine($"Error al crear cliente: {ex.Message}");
 
-                return BadRequest("ya existe el correo, Se ha producido un error al crear el cliente. Compruebe los datos de la solicitud e inténtelo de nuevo.");
+                return BadRequest(" Se ha producido un error al crear el cliente. Compruebe los datos de la solicitud e inténtelo de nuevo.");
             }
+
+
         }
     }
 

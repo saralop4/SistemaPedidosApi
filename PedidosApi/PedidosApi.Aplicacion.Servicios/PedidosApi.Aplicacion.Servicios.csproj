@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PedidosApi.Aplicacion.Exceptions\PedidosApi.Aplicacion.Exceptions.csproj" />
     <ProjectReference Include="..\PedidosApi.Aplicacion.Interfaces\PedidosApi.Aplicacion.Interfaces.csproj" />
+    <ProjectReference Include="..\PedidosApi.Aplicacion.Validadores\PedidosApi.Aplicacion.Validadores.csproj" />
     <ProjectReference Include="..\PedidosApi.Dominio.Interfaces\PedidosApi.Dominio.Interfaces.csproj" />
   </ItemGroup>
 

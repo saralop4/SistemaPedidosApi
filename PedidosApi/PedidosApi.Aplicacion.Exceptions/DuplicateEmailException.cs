@@ -5,5 +5,7 @@
         public DuplicateEmailException(string message) : base(message)
         {
         }
+
+        public DuplicateEmailException() { }
     }
 }

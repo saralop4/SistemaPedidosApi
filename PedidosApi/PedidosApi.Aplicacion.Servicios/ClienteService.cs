@@ -1,5 +1,7 @@
-﻿using PedidosApi.Aplicacion.Exceptions;
+﻿using FluentValidation;
+using PedidosApi.Aplicacion.Exceptions;
 using PedidosApi.Aplicacion.Interfaces;
+using PedidosApi.Aplicacion.Validadores;
 using PedidosApi.Dominio.Dtos;
 using PedidosApi.Dominio.Interfaces;
 using PedidosApi.Dominio.Persistencia.Modelos;
@@ -17,20 +19,26 @@ namespace PedidosApi.Aplicacion.Servicios
 
         public async Task CrearClienteAsync(ClienteDto clienteDto)
         {
-            try
+ 
+            var validator = new ClienteDtoValidator();
+            var validationResult = validator.Validate(clienteDto);
+            if (!validationResult.IsValid)
             {
-                await _repositorio.CrearClienteAsync(new Cliente
-                {
-                    Nombre = clienteDto.Nombre,
-                    Email = clienteDto.Email,
-                    FechaRegistro = DateTime.Now
-                });
+                throw new ValidationException(validationResult.Errors);
             }
-            catch (Exception ex)
+
+            var clienteExistente = await _repositorio.ObtenerClientePorEmailAsync(clienteDto.Email);
+            if (clienteExistente != null)
             {
-                
-                throw new DuplicateEmailException("El correo electrónico ya está en uso");
+                throw new DuplicateEmailException();
             }
+
+            await _repositorio.CrearClienteAsync(new Cliente
+            {
+                Nombre = clienteDto.Nombre,
+                Email = clienteDto.Email,
+                FechaRegistro = DateTime.Now
+            });
         }
     }
 }

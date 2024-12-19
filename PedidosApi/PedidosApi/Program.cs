@@ -100,7 +100,7 @@ namespace PedidosApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contabilidad");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sistema Api");
                     c.OAuthClientId("swagger");
                     c.OAuthClientSecret("secret");
                     c.OAuthRealm("realm");
