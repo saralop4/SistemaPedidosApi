@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PedidosApi.Aplicacion.Interfaces\PedidosApi.Aplicacion.Interfaces.csproj" />
+    <ProjectReference Include="..\PedidosApi.Aplicacion.Servicios\PedidosApi.Aplicacion.Servicios.csproj" />
+    <ProjectReference Include="..\PedidosApi.Dominio.Dtos\PedidosApi.Dominio.Dtos.csproj" />
+    <ProjectReference Include="..\PedidosApi.Dominio.Interfaces\PedidosApi.Dominio.Interfaces.csproj" />
+    <ProjectReference Include="..\PedidosApi.Dominio.Persistencia\PedidosApi.Dominio.Persistencia.csproj" />
+    <ProjectReference Include="..\PedidosApi.Infraestructura.Repositorios\PedidosApi.Infraestructura.Repositorios.csproj" />
+  </ItemGroup>
+
+</Project>
