@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PedidosApi.Dominio.Dtos\PedidosApi.Dominio.Dtos.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -16,20 +16,31 @@ namespace PedidosApi.Infraestructura.Repositorios
             _context = context;
         }
 
+        public async Task<Cliente> ObtenerClientePorEmailAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new ArgumentException("El correo electrónico es obligatorio.");
+            }
+
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.Email == email);
+
+            return cliente;
+        }
+
         public async Task CrearClienteAsync(Cliente cliente)
         {
 
-            var clienteExistente = await _context.Clientes.FirstOrDefaultAsync(c => c.Email == cliente.Email);
-
-            if (clienteExistente != null)
+            if (string.IsNullOrEmpty(cliente.Email))
             {
-               
-                throw new Exception("El correo electrónico ya está registrado");
+                throw new ArgumentException("El correo electrónico es obligatorio.");
             }
+        
 
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
         }
+
     }
 
 }

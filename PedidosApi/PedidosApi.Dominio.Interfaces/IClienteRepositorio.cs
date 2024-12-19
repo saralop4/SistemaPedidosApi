@@ -5,5 +5,7 @@ namespace PedidosApi.Dominio.Interfaces
     public interface IClienteRepositorio
     {
         Task CrearClienteAsync(Cliente cliente);
+
+        Task<Cliente> ObtenerClientePorEmailAsync(string email);
     }
 }
