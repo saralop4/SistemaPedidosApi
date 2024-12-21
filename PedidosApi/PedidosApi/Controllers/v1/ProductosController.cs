@@ -4,7 +4,7 @@ using PedidosApi.Dominio.Dtos;
 
 namespace PedidosApi.Controllers.v1
 {
-    [Route("Api/[controller]")]
+    [Route("Api/V1/[controller]")]
     [ApiController]
     public class ProductosController : ControllerBase
     {
@@ -16,9 +16,9 @@ namespace PedidosApi.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<IActionResult> ObtenerProductos([FromQuery] decimal? precioMin, [FromQuery] int? stockMin)
+        public async Task<IActionResult> ObtenerProductosConFiltroAsync([FromQuery] decimal? precioMin, [FromQuery] int? stockMin)
         {
-            var productos = await _productoService.ObtenerProductosAsync(precioMin, stockMin);
+            var productos = await _productoService.ObtenerProductosConFiltroAsync(precioMin, stockMin);
             return Ok(productos);
         }
 

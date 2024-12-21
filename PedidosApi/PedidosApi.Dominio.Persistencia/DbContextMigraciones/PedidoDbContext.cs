@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using PedidosApi.Dominio.Dtos;
 using PedidosApi.Dominio.Persistencia.Interfaces;
 using PedidosApi.Dominio.Persistencia.Modelos;
@@ -21,6 +23,9 @@ public partial class PedidoDbContext : DbContext, IPedidoDbContext
     public virtual DbSet<Producto> Productos { get; set; }
 
     public virtual DbSet<VistaTotalPedidoDto> VistaTotalPedidos { get; set; }
+
+    //public virtual DbSet<VistaDetalleTotalPedidosDto> VistaDetalleTotalPedidos { get; set; }
+
 
 
     public async Task<int> SaveChangesAsync()
@@ -48,11 +53,12 @@ public partial class PedidoDbContext : DbContext, IPedidoDbContext
             .ToView("VistaTotalPedidos")
             .HasNoKey();
 
+
         modelBuilder.Entity<Cliente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Clientes__3214EC07A21CCC78");
+            entity.HasKey(e => e.Id).HasName("PK__Clientes__3214EC07C0497565");
 
-            entity.HasIndex(e => e.Email, "UQ__Clientes__A9D10534BA19CE7B").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Clientes__A9D10534584B405E").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.FechaRegistro)
@@ -63,11 +69,12 @@ public partial class PedidoDbContext : DbContext, IPedidoDbContext
 
         modelBuilder.Entity<Pedido>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Pedidos__3214EC074B32E743");
+            entity.HasKey(e => e.Id).HasName("PK__Pedidos__3214EC07C43EA738");
 
             entity.Property(e => e.FechaPedido)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.Total).HasColumnType("decimal(18, 2)");
 
             entity.HasOne(d => d.Cliente).WithMany(p => p.Pedidos)
                 .HasForeignKey(d => d.ClienteId)
@@ -77,7 +84,15 @@ public partial class PedidoDbContext : DbContext, IPedidoDbContext
 
         modelBuilder.Entity<PedidoProducto>(entity =>
         {
-            entity.HasKey(e => new { e.PedidoId, e.ProductoId }).HasName("PK__PedidoPr__23F91EDA0C5298B6");
+            entity.HasKey(e => new { e.PedidoId, e.ProductoId }).HasName("PK__PedidoPr__23F91EDA43DC1E3C");
+
+            entity.ToTable(tb =>
+                {
+                    tb.HasTrigger("trg_RestarStock");
+                    tb.HasTrigger("trg_UpdateTotalAfterDelete");
+                    tb.HasTrigger("trg_UpdateTotalAfterInsert");
+                    tb.HasTrigger("trg_UpdateTotalAfterUpdate");
+                });
 
             entity.HasOne(d => d.Pedido).WithMany(p => p.PedidoProductos)
                 .HasForeignKey(d => d.PedidoId)
@@ -92,7 +107,7 @@ public partial class PedidoDbContext : DbContext, IPedidoDbContext
 
         modelBuilder.Entity<Producto>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Producto__3214EC07BA7E0526");
+            entity.HasKey(e => e.Id).HasName("PK__Producto__3214EC070A3A67BB");
 
             entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("(getdate())")
