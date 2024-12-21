@@ -27,6 +27,7 @@ namespace PedidosApi.Aplicacion.Servicios
                 throw new ValidationException(validationResult.Errors);
             }
 
+
             var clienteExistente = await _repositorio.ObtenerClientePorEmailAsync(clienteDto.Email);
             if (clienteExistente != null)
             {

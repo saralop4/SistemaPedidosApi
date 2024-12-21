@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PedidosApi.Dominio.Dtos;
 using PedidosApi.Dominio.Interfaces;
-using PedidosApi.Dominio.Persistencia.DbContextMigraciones;
 using PedidosApi.Dominio.Persistencia.Interfaces;
 using PedidosApi.Dominio.Persistencia.Modelos;
-using System;
 
 namespace PedidosApi.Infraestructura.Repositorios
 {

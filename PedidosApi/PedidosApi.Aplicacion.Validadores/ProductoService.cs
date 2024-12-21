@@ -45,7 +45,6 @@ namespace PedidosApi.Aplicacion.Servicios
             }
             return new ProductoDto
             {
-                
                 Nombre = producto.Nombre,
                 Precio = producto.Precio,
                 Stock = producto.Stock

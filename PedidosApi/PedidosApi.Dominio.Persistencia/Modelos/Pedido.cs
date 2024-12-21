@@ -11,6 +11,8 @@ public partial class Pedido
 
     public DateTime FechaPedido { get; set; }
 
+    public decimal Total { get; set; }
+
     public virtual Cliente Cliente { get; set; } = null!;
 
     public virtual ICollection<PedidoProducto> PedidoProductos { get; set; } = new List<PedidoProducto>();

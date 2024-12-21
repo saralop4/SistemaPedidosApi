@@ -5,7 +5,7 @@ using PedidosApi.Dominio.Dtos;
 
 namespace PedidosApi.Controllers.V1
 {
-    [Route("Api/[controller]")]
+    [Route("Api/V1/[controller]")]
     [ApiController]
     public class ClientesController : ControllerBase
     {
@@ -34,7 +34,7 @@ namespace PedidosApi.Controllers.V1
             {
                 Console.Error.WriteLine($"Error al crear cliente: {ex.Message}");
 
-                return BadRequest(" Se ha producido un error al crear el cliente. Compruebe los datos de la solicitud e inténtelo de nuevo.");
+                return BadRequest(new { mensaje = " Se ha producido un error al crear el cliente. Compruebe los datos de la solicitud e inténtelo de nuevo." });
             }
 
 
