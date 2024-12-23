@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PedidosApi.Aplicacion.Exceptions;
 using PedidosApi.Aplicacion.Interfaces;
 using PedidosApi.Dominio.Dtos;
 
@@ -25,8 +26,20 @@ namespace PedidosApi.Controllers.v1
         [HttpPut("{id}")]
         public async Task<IActionResult> ActualizarProducto(int id, [FromBody] ProductoDto productoDto)
         {
-            await _productoService.ActualizarProductoAsync(id, productoDto);
-            return NoContent();
+            try
+            {
+                await _productoService.ActualizarProductoAsync(id, productoDto);
+                return Ok(new { mensaje = "Actualizacion Exitosa" }); 
+            }
+            catch (ProductoNoEncontradoException)
+            {
+                return NotFound(new { mensaje = "Producto no encontrado" }); 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensaje = " Se ha producido un error. Compruebe los datos de la solicitud e inténtelo de nuevo." });
+            }
         }
+
     }
 }

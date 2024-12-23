@@ -24,10 +24,12 @@ namespace PedidosApi.Infraestructura.Repositorios
         public async Task<Pedido?> ObtenerPedidoAsync(int id)
         {
             return await _context.Pedidos
+                .Include(p => p.Cliente) 
                 .Include(p => p.PedidoProductos)
-                .ThenInclude(p => p.Producto) 
-                .FirstOrDefaultAsync(p => p.Id == id);
+                    .ThenInclude(pp => pp.Producto) 
+                .FirstOrDefaultAsync(p => p.Id == id); 
         }
+
 
         public async Task<decimal?> ObtenerTotalPedidoVista(int id)
         {

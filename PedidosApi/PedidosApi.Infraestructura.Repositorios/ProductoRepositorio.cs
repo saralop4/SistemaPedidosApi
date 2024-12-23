@@ -23,18 +23,10 @@ namespace PedidosApi.Infraestructura.Repositorios
                 .ToListAsync();
         }
 
-        public async Task ActualizarProductoAsync(int id, Producto producto)
+        public async Task ActualizarProductoAsync(Producto producto)
         {
-            var existente = await ObtenerProductoAsync(id);
-            if (existente != null)
-            {
-                existente.Nombre = producto.Nombre;
-                existente.Precio = producto.Precio;
-                existente.Stock = producto.Stock;
-                await _context.SaveChangesAsync();
-            }
-
-            throw new ProductoNoEncontradoException();
+            _context.Productos.Update(producto);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Producto> ObtenerProductoAsync(int id)

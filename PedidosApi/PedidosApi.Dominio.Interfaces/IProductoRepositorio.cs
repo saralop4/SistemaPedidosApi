@@ -10,7 +10,7 @@ namespace PedidosApi.Dominio.Interfaces
     public interface IProductoRepositorio
     {
         Task<IEnumerable<Producto>> ObtenerProductosConFiltroAsync(decimal? precioMin, int? stockMin);
-        Task ActualizarProductoAsync(int id, Producto producto);
+        Task ActualizarProductoAsync(Producto producto);
         Task<Producto> ObtenerProductoAsync(int id);
     }
 }

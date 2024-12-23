@@ -1,4 +1,5 @@
-﻿using PedidosApi.Aplicacion.Interfaces;
+﻿using PedidosApi.Aplicacion.Exceptions;
+using PedidosApi.Aplicacion.Interfaces;
 using PedidosApi.Dominio.Dtos;
 using PedidosApi.Dominio.Interfaces;
 using PedidosApi.Dominio.Persistencia.Modelos;
@@ -27,13 +28,22 @@ namespace PedidosApi.Aplicacion.Servicios
 
         public async Task ActualizarProductoAsync(int id, ProductoDto productoDto)
         {
-            await _repositorio.ActualizarProductoAsync(id, new Producto
+            // Obtener el producto existente
+            var productoExistente = await _repositorio.ObtenerProductoAsync(id);
+            if (productoExistente == null)
             {
-                Nombre = productoDto.Nombre,
-                Precio = productoDto.Precio,
-                Stock = productoDto.Stock
-            });
+                throw new ProductoNoEncontradoException($"El producto con ID {id} no existe.");
+            }
+
+            // Actualizar las propiedades
+            productoExistente.Nombre = productoDto.Nombre;
+            productoExistente.Precio = productoDto.Precio;
+            productoExistente.Stock = productoDto.Stock;
+
+            // Guardar cambios
+            await _repositorio.ActualizarProductoAsync(productoExistente);
         }
+
 
         public async Task<ProductoDto> ObtenerProductoAsync(int id)
         {
