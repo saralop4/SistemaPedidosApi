@@ -25,7 +25,7 @@ namespace PedidosApi.Aplicacion.Servicios
             var pedido = new Pedido
             {
                 ClienteId = pedidoDto.ClienteId,
-                FechaPedido = DateTime.Now
+                PedidoProductos = new List<PedidoProducto>()
             };
 
 
@@ -51,7 +51,7 @@ namespace PedidosApi.Aplicacion.Servicios
             await _repositorio.CrearPedidoAsync(pedido);
         }
 
-        public async Task<PedidoDto?> ObtenerPedidoAsync(int id)
+        public async Task<PedidoDetalleDto?> ObtenerPedidoAsync(int id)
         {
             var pedido = await _repositorio.ObtenerPedidoAsync(id);
             if (pedido == null)
@@ -59,16 +59,20 @@ namespace PedidosApi.Aplicacion.Servicios
                 return null;
             }
 
-            return new PedidoDto
+            return new PedidoDetalleDto
             {
-                ClienteId = pedido.ClienteId,
-                Productos = pedido.PedidoProductos.Select(pp => new PedidoProductoDto
+                NombreCliente = pedido.Cliente.Nombre, 
+                FechaPedido = pedido.FechaPedido,     
+                Productos = pedido.PedidoProductos.Select(pp => new PedidoProductoDetalleDto
                 {
-                    ProductoId = pp.ProductoId,
-                    Cantidad = pp.Cantidad
+                    NombreProducto = pp.Producto.Nombre,    
+                    PrecioUnitario = pp.Producto.Precio,    
+                    Cantidad = pp.Cantidad                 
                 }).ToList()
             };
         }
+
+
 
         public async Task<decimal?> ObtenerTotalPedidoAsync(int id)
         {

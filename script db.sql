@@ -147,3 +147,19 @@ INNER JOIN PedidoProductos pp ON p.Id = pp.PedidoId
 INNER JOIN Productos pr ON pp.ProductoId = pr.Id;
 GO
 
+
+
+
+ SELECT 
+    cli.Nombre AS NombreCliente,
+    pe.FechaPedido,
+    prod.Nombre AS NombreProducto,
+    prod.Precio AS PrecioUnitario,
+    pp.Cantidad,
+    pe.Total
+FROM Pedidos pe
+INNER JOIN Clientes cli ON cli.Id = pe.ClienteId
+INNER JOIN PedidoProductos pp ON pp.PedidoId = pe.Id
+INNER JOIN Productos prod ON prod.Id = pp.ProductoId
+WHERE pe.Id = 1;
+

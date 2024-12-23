@@ -21,7 +21,7 @@ namespace PedidosApi.Controllers.v1
         {
             try { 
             await _pedidoService.CrearPedidoAsync(pedidoDto);
-            return Ok();
+            return Ok(new { mensaje = "Pedido Creado Exitosamente." });
              }
             catch (StockInsuficienteException ex)
             {
@@ -46,16 +46,16 @@ namespace PedidosApi.Controllers.v1
             return Ok(pedido);
         }
 
-        [HttpGet("{id}/total")]
-        public async Task<IActionResult> ObtenerTotalPedido(int id)
-        {
-            var total = await _pedidoService.ObtenerTotalPedidoAsync(id);
-            if (total == null)
-            {
-                return NotFound(new { mensaje = "No se encontrarón  pedidos" });
-            }
+        //[HttpGet("{id}/total")]
+        //public async Task<IActionResult> ObtenerTotalPedido(int id)
+        //{
+        //    var total = await _pedidoService.ObtenerTotalPedidoAsync(id);
+        //    if (total == null)
+        //    {
+        //        return NotFound(new { mensaje = "No se encontrarón  pedidos" });
+        //    }
 
-            return Ok(total);
-        }
+        //    return Ok(total);
+        //}
     }
 }
